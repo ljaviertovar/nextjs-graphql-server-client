@@ -1,0 +1,10 @@
+query getSearchUsers($value: String) {
+	searchUser(value: $value) {
+		id
+		firstName
+		lastName
+		email
+		username
+		image
+	}
+}
