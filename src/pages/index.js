@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useLazyQuery, } from '@apollo/client'
+import { ApolloClient, InMemoryCache, useLazyQuery, } from '@apollo/client'
 
 import Head from 'next/head'
 import { Button, Container, Grid, Input, Spacer, User, Row } from "@nextui-org/react"
@@ -87,14 +87,20 @@ export default function Home({ staticUsers = [] }) {
 
 export const getServerSideProps = async () => {
 
-  // const { data } = await client.query({
-  //   query: GET_USERS
-  // })
+  const client = new ApolloClient({
+    ssrMode: typeof window === 'undefined',
+    uri: "http://localhost:3000/api/graphql",
+    cache: new InMemoryCache(),
+  })
+
+  const { data } = await client.query({
+    query: GET_USERS
+  })
 
   return {
     props: {
-      // staticUsers: data.users
-      staticUsers: []
+      staticUsers: data.users
+      // staticUsers: []
     }
   }
 }
