@@ -93,14 +93,14 @@ export const getServerSideProps = async () => {
     cache: new InMemoryCache(),
   })
 
-  const { data } = await client.query({
-    query: GET_USERS
-  })
+  // const { data } = await client.query({
+  //   query: GET_USERS
+  // })
 
   return {
     props: {
-      staticUsers: data.users
-      // staticUsers: []
+      // staticUsers: data.users
+      staticUsers: []
     }
   }
 }
