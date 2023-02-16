@@ -9,7 +9,12 @@ const nextConfig = {
     })
 
     return config
-  }
+  },
+  images: {
+    domains: [
+      "robohash.org",
+    ],
+  },
 }
 
 module.exports = nextConfig

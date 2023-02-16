@@ -9,7 +9,7 @@ import SEARCH_USERS from '@/graphql/queries/searchUsers.gql'
 
 import client from '@/graphql/apollo-client'
 
-export default function Home({ staticUsers }) {
+export default function Home({ staticUsers = [] }) {
 
   const [users, setUsers] = useState(staticUsers)
   const [searchValue, setSearchValue] = useState('')
@@ -85,7 +85,7 @@ export default function Home({ staticUsers }) {
   )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
 
   const { data } = await client.query({
     query: GET_USERS
