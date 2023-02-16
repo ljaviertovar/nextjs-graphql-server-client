@@ -85,15 +85,16 @@ export default function Home({ staticUsers = [] }) {
   )
 }
 
-// export const getServerSideProps = async () => {
+export const getServerSideProps = async () => {
 
-//   const { data } = await client.query({
-//     query: GET_USERS
-//   })
+  // const { data } = await client.query({
+  //   query: GET_USERS
+  // })
 
-//   return {
-//     props: {
-//       staticUsers: data.users
-//     }
-//   }
-// }
+  return {
+    props: {
+      // staticUsers: data.users
+      staticUsers: []
+    }
+  }
+}
