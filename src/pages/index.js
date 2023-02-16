@@ -8,6 +8,7 @@ import GET_USERS from '@/graphql/queries/getUsers.gql'
 import SEARCH_USERS from '@/graphql/queries/searchUsers.gql'
 
 import client from '@/graphql/apollo-client'
+import { gql } from 'apollo-server-core'
 
 export default function Home({ staticUsers = [] }) {
 
@@ -93,14 +94,25 @@ export const getServerSideProps = async () => {
     cache: new InMemoryCache(),
   })
 
-  // const { data } = await client.query({
-  //   query: GET_USERS
-  // })
+  const { data } = await client.query({
+    query: gql`
+     query getUsers {
+	users {
+		id
+		firstName
+		lastName
+		email
+		username
+		image
+	}
+}
+    `,
+  })
 
   return {
     props: {
-      // staticUsers: data.users
-      staticUsers: []
+      staticUsers: data.users
+      // staticUsers: []
     }
   }
 }
