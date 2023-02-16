@@ -86,33 +86,33 @@ export default function Home({ staticUsers = [] }) {
   )
 }
 
-export const getServerSideProps = async () => {
+// export const getServerSideProps = async () => {
 
-  const client = new ApolloClient({
-    ssrMode: typeof window === 'undefined',
-    uri: "http://localhost:3000/api/graphql",
-    cache: new InMemoryCache(),
-  })
+//   const client = new ApolloClient({
+//     ssrMode: typeof window === 'undefined',
+//     uri: "http://localhost:3000/api/graphql",
+//     cache: new InMemoryCache(),
+//   })
 
-  const { data } = await client.query({
-    query: gql`
-     query getUsers {
-	users {
-		id
-		firstName
-		lastName
-		email
-		username
-		image
-	}
-}
-    `,
-  })
+//   const { data } = await client.query({
+//     query: gql`
+//      query getUsers {
+// 	users {
+// 		id
+// 		firstName
+// 		lastName
+// 		email
+// 		username
+// 		image
+// 	}
+// }
+//     `,
+//   })
 
-  return {
-    props: {
-      staticUsers: data.users
-      // staticUsers: []
-    }
-  }
-}
+//   return {
+//     props: {
+//       staticUsers: data.users
+//       // staticUsers: []
+//     }
+//   }
+// }
