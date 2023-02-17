@@ -168,7 +168,7 @@ export const getServerSideProps = async () => {
   const client = new ApolloClient({
     ssrMode: true,
     link: createHttpLink({
-      uri: 'http://localhost:3000/api/graphql',
+      uri: 'http://localhost/api/graphql',
       credentials: 'same-origin',
       headers: {
         'Access-Control-Allow-Credentials': true,
