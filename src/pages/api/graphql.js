@@ -5,10 +5,14 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-co
 import typeDefs from "@/graphql/schemas"
 import resolvers from "@/graphql/resolvers"
 
-const server = new ApolloServer({
+const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
 })
 
-export default startServerAndCreateNextHandler(server)
+const handler = startServerAndCreateNextHandler(apolloServer, {
+  context: async (req, res) => ({ req, res }),
+})
+
+export default handler
