@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ApolloClient, InMemoryCache, useLazyQuery, useQuery } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink, useLazyQuery, useQuery } from '@apollo/client'
 
 import Head from 'next/head'
 import { Button, Container, Grid, Input, Spacer, User, Row } from "@nextui-org/react"
@@ -164,6 +164,18 @@ export const getServerSideProps = async () => {
   //   }
   // `
   //   const data = await request('http://localhost:3000/api/graphql', query)
+
+  const client = new ApolloClient({
+    ssrMode: true,
+    link: createHttpLink({
+      uri: 'http://localhost:3000/api/graphql',
+      credentials: 'same-origin',
+      // headers: {
+      //   cookie: req.header('Cookie'),
+      // },
+    }),
+    cache: new InMemoryCache(),
+  })
 
 
 
