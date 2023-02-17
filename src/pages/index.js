@@ -98,7 +98,30 @@ export default function Home({ staticUsers = [] }) {
 
 export const getServerSideProps = async () => {
 
-  let results = await fetch('http://localhost:3000/api/graphql', {
+  // let results = await fetch('http://localhost:3000/api/graphql', {
+  //   method: 'POST',
+
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   },
+
+  //   body: JSON.stringify({
+  //     query: `{
+  //       users {
+  //         		id
+  //         		firstName
+  //         		lastName
+  //         		email
+  //         		username
+  //         		image
+  //         	}
+  //     }`
+  //   })
+  // })
+  // let { data } = await results.json()
+
+  // console.log('DATA', data)
+  let results = await fetch('https://rickandmortyapi.com/graphql', {
     method: 'POST',
 
     headers: {
@@ -107,24 +130,21 @@ export const getServerSideProps = async () => {
 
     body: JSON.stringify({
       query: `{
-        users {
-          		id
-          		firstName
-          		lastName
-          		email
-          		username
-          		image
-          	}
+        characters {
+          results {
+            name
+          }
+        }
       }`
     })
   })
-  let { data } = await results.json()
-
-  console.log('DATA', data)
+  let characters = await results.json()
+  console.log(characters.data)
 
   return {
     props: {
-      staticUsers: data.users
+      characters: characters.data
+      // staticUsers: data.users
       // staticUsers: []
     }
   }
