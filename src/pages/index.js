@@ -98,26 +98,27 @@ export default function Home({ staticUsers = [] }) {
 
 export const getServerSideProps = async () => {
 
-  const client = new ApolloClient({
-    ssrMode: typeof window === 'undefined',
-    uri: "http://localhost:3000/api/graphql",
-    cache: new InMemoryCache(),
-  })
+  let results = await fetch('http://localhost:3000/api/graphql', {
+    method: 'POST',
 
-  const { data } = await client.query({
-    query: gql`
-     query getUsers {
-	users {
-		id
-		firstName
-		lastName
-		email
-		username
-		image
-	}
-}
-    `,
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+      query: `{
+        users {
+          		id
+          		firstName
+          		lastName
+          		email
+          		username
+          		image
+          	}
+      }`
+    })
   })
+  let { data } = await results.json()
 
   console.log('DATA', data)
 
