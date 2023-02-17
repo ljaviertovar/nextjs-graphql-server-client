@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react'
-import { ApolloClient, InMemoryCache, useLazyQuery, } from '@apollo/client'
+import { useEffect, useRef, useState } from 'react'
+import { ApolloClient, InMemoryCache, useLazyQuery, useQuery } from '@apollo/client'
 
 import Head from 'next/head'
 import { Button, Container, Grid, Input, Spacer, User, Row } from "@nextui-org/react"
@@ -7,8 +7,8 @@ import { Button, Container, Grid, Input, Spacer, User, Row } from "@nextui-org/r
 import GET_USERS from '@/graphql/queries/getUsers.gql'
 import SEARCH_USERS from '@/graphql/queries/searchUsers.gql'
 
-import client from '@/graphql/apollo-client'
-import { gql } from 'apollo-server-core'
+// import client from '@/graphql/apollo-client'
+// import { gql } from 'apollo-server-core'
 
 export default function Home({ staticUsers = [] }) {
 
@@ -16,6 +16,8 @@ export default function Home({ staticUsers = [] }) {
   const [searchValue, setSearchValue] = useState('')
 
   const staticUSersRef = useRef(staticUsers)
+
+  const { data } = useQuery(GET_USERS)
 
   const [getSearchedUsers] = useLazyQuery(SEARCH_USERS, {
     fetchPolicy: 'network-only',
@@ -31,6 +33,14 @@ export default function Home({ staticUsers = [] }) {
       }
     })
   }
+
+  useEffect(() => {
+
+    if (data) {
+      setUsers(data.users)
+    }
+  }, [data])
+
 
   return (
     <>
