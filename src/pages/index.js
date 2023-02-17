@@ -11,6 +11,7 @@ import { request } from 'graphql-request'
 
 // import client from '@/graphql/apollo-client'
 import { gql } from 'apollo-server-core'
+import handler from './api/users'
 
 export default function Home({ staticUsers = [] }) {
 
@@ -151,17 +152,23 @@ export const getServerSideProps = async () => {
   //   }
   // }
 
-  const query = `
-  query {
-    users {
-      id
-      firstName
-      lastName
-      email
-      image
-    }
-  }
-`
-  const data = await request('http://localhost:3000/api/graphql', query)
-  return { props: { staticUsers: data.users } }
+  //   const query = `
+  //   query {
+  //     users {
+  //       id
+  //       firstName
+  //       lastName
+  //       email
+  //       image
+  //     }
+  //   }
+  // `
+  //   const data = await request('http://localhost:3000/api/graphql', query)
+
+
+
+  const users = await fetch('http://localhost:3000/api/users').then(resp => resp.json())
+
+
+  return { props: { staticUsers: users.users } }
 }
