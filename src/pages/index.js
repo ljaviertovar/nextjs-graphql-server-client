@@ -7,7 +7,7 @@ import { Button, Container, Grid, Input, Spacer, User, Row } from "@nextui-org/r
 import GET_USERS from '@/graphql/queries/getUsers.gql'
 import SEARCH_USERS from '@/graphql/queries/searchUsers.gql'
 
-import client from '@/graphql/apollo-client'
+// import client from '@/graphql/apollo-client'
 import { gql } from 'apollo-server-core'
 
 export default function Home({ staticUsers = [] }) {
@@ -17,7 +17,7 @@ export default function Home({ staticUsers = [] }) {
 
   const staticUSersRef = useRef(staticUsers)
 
-  const { data } = useQuery(GET_USERS)
+  // const { data } = useQuery(GET_USERS)
 
   const [getSearchedUsers] = useLazyQuery(SEARCH_USERS, {
     fetchPolicy: 'network-only',
@@ -34,12 +34,12 @@ export default function Home({ staticUsers = [] }) {
     })
   }
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (data) {
-      setUsers(data.users)
-    }
-  }, [data])
+  //   if (data) {
+  //     setUsers(data.users)
+  //   }
+  // }, [data])
 
 
   return (
@@ -98,29 +98,28 @@ export default function Home({ staticUsers = [] }) {
 
 export const getServerSideProps = async () => {
 
-  // const client = new ApolloClient({
-  //   ssrMode: typeof window === 'undefined',
-  //   uri: "http://localhost:3000/api/graphql",
-  //   cache: new InMemoryCache(),
-  // })
+  const client = new ApolloClient({
+    ssrMode: typeof window === 'undefined',
+    uri: "http://localhost:3000/api/graphql",
+    cache: new InMemoryCache(),
+  })
 
-  // const { data } = await client.query({
-  //   query: gql`
-  //      query getUsers {
-  // 	users {
-  // 		id
-  // 		firstName
-  // 		lastName
-  // 		email
-  // 		username
-  // 		image
-  // 	}
-  // }
-  //     `,
-  // })
+  const { data } = await client.query({
+    query: gql`
+     query getUsers {
+	users {
+		id
+		firstName
+		lastName
+		email
+		username
+		image
+	}
+}
+    `,
+  })
 
-  const { data } = await client.query({ query: GET_USERS })
-
+  console.log('DATA', data)
 
   return {
     props: {
