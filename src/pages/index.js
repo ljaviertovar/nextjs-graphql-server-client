@@ -170,9 +170,11 @@ export const getServerSideProps = async () => {
     link: createHttpLink({
       uri: 'http://localhost:3000/api/graphql',
       credentials: 'same-origin',
-      // headers: {
-      //   cookie: req.header('Cookie'),
-      // },
+      headers: {
+        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
+      },
     }),
     cache: new InMemoryCache(),
   })
