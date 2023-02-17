@@ -9,9 +9,9 @@ import SEARCH_USERS from '@/graphql/queries/searchUsers.gql'
 
 import { request } from 'graphql-request'
 
-// import client from '@/graphql/apollo-client'
 import { gql } from 'apollo-server-core'
-import handler from './api/users'
+
+import client from '@/graphql/apollo-client'
 
 export default function Home({ staticUsers = [] }) {
 
@@ -167,8 +167,7 @@ export const getServerSideProps = async () => {
 
 
 
-  const users = await fetch('http://localhost:3000/api/users').then(resp => resp.json())
+  const { data } = await client.query({ query: GET_USERS })
 
-
-  return { props: { staticUsers: users.users } }
+  return { props: { staticUsers: data.users } }
 }
