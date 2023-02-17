@@ -7,6 +7,8 @@ import { Button, Container, Grid, Input, Spacer, User, Row } from "@nextui-org/r
 import GET_USERS from '@/graphql/queries/getUsers.gql'
 import SEARCH_USERS from '@/graphql/queries/searchUsers.gql'
 
+import { request } from 'graphql-request'
+
 // import client from '@/graphql/apollo-client'
 import { gql } from 'apollo-server-core'
 
@@ -121,31 +123,45 @@ export const getServerSideProps = async () => {
   // let { data } = await results.json()
 
   // console.log('DATA', data)
-  let results = await fetch('https://rickandmortyapi.com/graphql', {
-    method: 'POST',
+  // let results = await fetch('https://rickandmortyapi.com/graphql', {
+  //   method: 'POST',
 
-    headers: {
-      "Content-Type": "application/json"
-    },
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   },
 
-    body: JSON.stringify({
-      query: `{
-        characters {
-          results {
-            name
-          }
-        }
-      }`
-    })
-  })
-  let characters = await results.json()
-  console.log(characters.data)
+  //   body: JSON.stringify({
+  //     query: `{
+  //       characters {
+  //         results {
+  //           name
+  //         }
+  //       }
+  //     }`
+  //   })
+  // })
+  // let characters = await results.json()
+  // console.log(characters.data)
 
-  return {
-    props: {
-      characters: characters.data
-      // staticUsers: data.users
-      // staticUsers: []
+  // return {
+  //   props: {
+  //     characters: characters.data
+  //     // staticUsers: data.users
+  //     // staticUsers: []
+  //   }
+  // }
+
+  const query = `
+  query {
+    users {
+      id
+      firstName
+      lastName
+      email
+      image
     }
   }
+`
+  const data = await request('http://localhost:3000/api/graphql', query)
+  return { props: { staticUsers: data.users } }
 }
