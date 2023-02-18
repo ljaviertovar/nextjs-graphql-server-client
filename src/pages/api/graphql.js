@@ -4,7 +4,7 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-co
 
 import typeDefs from "@/graphql/schemas"
 import resolvers from "@/graphql/resolvers"
-import allowCors from "utils/cors"
+import allowCors from "@/utils/cors"
 
 const apolloServer = new ApolloServer({
   typeDefs,
@@ -17,4 +17,3 @@ const handler = startServerAndCreateNextHandler(apolloServer, {
 })
 
 export default allowCors(handler)
-// export default handler
