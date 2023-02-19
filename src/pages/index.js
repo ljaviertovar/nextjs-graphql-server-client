@@ -38,7 +38,7 @@ export default function Home() {
     })
   }
 
-  if (error) {
+  if (!data && error) {
     console.error(error)
     return null
   }
