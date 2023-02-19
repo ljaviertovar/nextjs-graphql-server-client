@@ -13,8 +13,8 @@ export default function Home() {
 
   const usersRef = useRef(null)
 
-  // const { data, loading } = useQuery(GET_USERS)
-  const loading = false
+  const { data, loading } = useQuery(GET_USERS)
+  // const loading = false
 
   const [getSearchedUsers] = useLazyQuery(SEARCH_USERS, {
     fetchPolicy: 'network-only',
@@ -54,6 +54,7 @@ export default function Home() {
       <main >
 
         <pre>
+          {JSON.stringify(data)}
           {JSON.stringify(users)}
         </pre>
 
