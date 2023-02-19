@@ -13,7 +13,7 @@ export default function Home() {
 
   const usersRef = useRef(null)
 
-  const { data, loading } = useQuery(GET_USERS)
+  const { data, loading, error } = useQuery(GET_USERS)
   // const loading = false
 
   const [getSearchedUsers] = useLazyQuery(SEARCH_USERS, {
@@ -54,6 +54,7 @@ export default function Home() {
       <main >
 
         <pre>
+          {JSON.stringify(error)}
           {JSON.stringify(data)}
           {JSON.stringify(users)}
         </pre>
