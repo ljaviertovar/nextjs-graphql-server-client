@@ -9,6 +9,12 @@ import allowCors from "@/utils/cors"
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  cors: {
+
+    origin: "http://localhost:3000",
+    credentials: true
+
+  },
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
 })
 
