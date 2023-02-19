@@ -14,7 +14,6 @@ export default function Home() {
   const usersRef = useRef(null)
 
   const { data, loading, error } = useQuery(GET_USERS)
-  // const loading = false
 
   const [getSearchedUsers] = useLazyQuery(SEARCH_USERS, {
     fetchPolicy: 'network-only',
@@ -23,12 +22,12 @@ export default function Home() {
     }
   })
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setUsers(data.users)
-  //     usersRef.current = data.users
-  //   }
-  // }, [data])
+  useEffect(() => {
+    if (data) {
+      setUsers(data.users)
+      usersRef.current = data.users
+    }
+  }, [data])
 
 
   const searchUser = () => {
@@ -39,9 +38,10 @@ export default function Home() {
     })
   }
 
-  // if (!users || error) {
-  //   return null
-  // }
+  if (error) {
+    console.error(error)
+    return null
+  }
 
   return (
     <>
@@ -53,12 +53,6 @@ export default function Home() {
       </Head>
       <main >
 
-        <pre>
-          {JSON.stringify(error)}
-          {JSON.stringify(data)}
-          {JSON.stringify(users)}
-        </pre>
-
         <Container css={{ display: 'flex', justifyContent: 'center' }}>
           <Spacer y={2.5} />
           <Row justify="center" align="center">
@@ -66,7 +60,7 @@ export default function Home() {
             <Input
               clearable
               labelPlaceholder="User"
-              onClearClick={() => setUsers(usersRef?.current)}
+              onClearClick={() => setUsers(usersRef.current)}
               initialValue={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
             />
