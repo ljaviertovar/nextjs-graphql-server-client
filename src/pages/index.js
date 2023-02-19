@@ -78,7 +78,8 @@ export default function Home() {
               :
               <Grid.Container gap={2} justify="center">
                 {users.map(u => (
-                  <Grid xs={12} sm={6} lg={3}
+                  <Grid
+                    xs={12} sm={6} lg={3}
                     key={u.id}
                   >
                     <User
