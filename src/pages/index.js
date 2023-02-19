@@ -13,7 +13,7 @@ export default function Home() {
 
   const usersRef = useRef(null)
 
-  const { data, loading, error } = useQuery(GET_USERS)
+  const { data, loading } = useQuery(GET_USERS)
 
   const [getSearchedUsers] = useLazyQuery(SEARCH_USERS, {
     fetchPolicy: 'network-only',
@@ -36,11 +36,6 @@ export default function Home() {
         value: searchValue
       }
     })
-  }
-
-  if (!data && error) {
-    console.error(error)
-    return null
   }
 
   return (
