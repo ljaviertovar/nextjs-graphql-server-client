@@ -8,12 +8,12 @@ import GET_USERS from '@/graphql/queries/getUsers.gql'
 import SEARCH_USERS from '@/graphql/queries/searchUsers.gql'
 
 export default function Home() {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState(null)
   const [searchValue, setSearchValue] = useState('')
 
   const usersRef = useRef(null)
 
-  const { data, loading } = useQuery(GET_USERS)
+  const { data, loading, error } = useQuery(GET_USERS)
 
   const [getSearchedUsers] = useLazyQuery(SEARCH_USERS, {
     fetchPolicy: 'network-only',
@@ -38,6 +38,10 @@ export default function Home() {
     })
   }
 
+  if (!users || error) {
+    return null
+  }
+
   return (
     <>
       <Head>
@@ -48,6 +52,10 @@ export default function Home() {
       </Head>
       <main >
 
+        <pre>
+          {JSON.stringify(users)}
+        </pre>
+
         <Container css={{ display: 'flex', justifyContent: 'center' }}>
           <Spacer y={2.5} />
           <Row justify="center" align="center">
@@ -55,7 +63,7 @@ export default function Home() {
             <Input
               clearable
               labelPlaceholder="User"
-              onClearClick={() => setUsers(usersRef.current)}
+              onClearClick={() => setUsers(usersRef?.current)}
               initialValue={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
             />
